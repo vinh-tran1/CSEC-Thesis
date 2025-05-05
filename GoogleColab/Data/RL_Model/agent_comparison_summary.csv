@@ -1,0 +1,5 @@
+Agent,Mean Total Return,Std Total Return,Mean Reward Score,Mean ROI,Mean MOIC,Mean IRR,Avg Ipo,Avg Acquisition,Avg Closed,Avg Still_Active,Avg Too_Young,Mann-Whitney U Test,Significance
+Agent A,45760000.0,16130285.876232311,47.04,1.2879999999999998,2.288,0.21543585837244933,0.96,4.52,1.08,10.64,2.8,,
+Agent B,54160000.0,17146856.676299334,54.84,1.7079999999999997,2.7080000000000006,0.26975595668496655,1.0,5.52,1.32,10.98,1.18,,
+Statistical Test,,0.008524382696407503,,,,,,,,,,"
+Mann-Whitney U test (Agent A < Agent B): U = 904.00, p = 0.0085",Statistically significant: Agent B outperforms Agent A.

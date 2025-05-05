@@ -1,0 +1,7 @@
+Target,Feature_Tier,Model,AUC,Accuracy,Precision,Recall,F1,Best_Params
+success_label_10y,FULL_MODEL,CatBoost,0.813065665884479,0.7474660956459672,0.5940860215053764,0.6848162903939796,0.6362327781205017,"{'subsample': 0.8, 'learning_rate': 0.05, 'l2_leaf_reg': 5, 'iterations': 700, 'depth': 6, 'border_count': 255}"
+success_label_10y,MACRO_MODEL,CatBoost,0.78747891796582,0.737758743754461,0.5846030473135525,0.6454183266932271,0.6135072585735325,"{'subsample': 0.7, 'learning_rate': 0.03, 'l2_leaf_reg': 5, 'iterations': 700, 'depth': 8, 'border_count': 64}"
+success_label_10y,STATIC_MODEL,CatBoost,0.7789685944147743,0.7229122055674518,0.5600907029478458,0.6560424966799469,0.6042813455657492,"{'subsample': 0.7, 'learning_rate': 0.03, 'l2_leaf_reg': 5, 'iterations': 700, 'depth': 8, 'border_count': 64}"
+success_label_5y,FULL_MODEL,CatBoost,0.8001288310363444,0.7433261955745896,0.5189318453567158,0.687797147385103,0.5915492957746479,"{'subsample': 0.9, 'learning_rate': 0.05, 'l2_leaf_reg': 9, 'iterations': 500, 'depth': 8, 'border_count': 128}"
+success_label_5y,MACRO_MODEL,CatBoost,0.7656970909214164,0.7319057815845824,0.5031578947368421,0.6312731114632858,0.5599812558575445,"{'subsample': 0.7, 'learning_rate': 0.03, 'l2_leaf_reg': 5, 'iterations': 700, 'depth': 8, 'border_count': 64}"
+success_label_5y,STATIC_MODEL,CatBoost,0.752920735069571,0.7063526052819414,0.46953937592867756,0.6677231907025885,0.5513631406761178,"{'subsample': 0.7, 'learning_rate': 0.03, 'l2_leaf_reg': 5, 'iterations': 700, 'depth': 8, 'border_count': 64}"
