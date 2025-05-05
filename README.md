@@ -89,6 +89,9 @@ $ cd <folder>
 **Average Return Distribution**
 ![Return Comparison](GoogleColab/Data/RL_Model/return_comparison.png)
 
+**Average IRR Distribution**
+![IRR Comparison](GoogleColab/Data/RL_Model/irr_comparison.png)
+
 ## Notes
 
 - The `GoogleColab` folder consists of files (python notebooks and data) that originally resides on my Yale Google Drive account. I simply downloaded the files and moved them into this repository. Thus, the code in these files may not run without reconfiguration because the file paths are configuired to the structure of my Google Drive. Nonetheless, all useful data used in the thesis is included in the nested `Data` Folder such that there is no need to run the code to see any data. To run the code in this folder, either 1) re-configure the file paths or 2) create an indentical environment/configuration in your own Google Drive.
