@@ -1,6 +1,8 @@
 # All You Need Is Time: Predicting Early-Stage Startup Success Through Temporal and Contextual Modeling
 **Vinh Tran '25, B.S. in Computer Science and Economics at Yale University**
 
+[See Full Thesis Report Here](https://drive.google.com/file/d/1x1bOZDxPOgJLdEuXigH2SaGmpRMwzhFZ/view?usp=sharing)
+
 ## Project Overview
 
 Nine out of ten startups fail, and fewer than one percent ever become billion-dollar companies. Yet for venture capitalists, these early-stage bets are where the biggest returns lie. Because most startups lack traditional financial metrics or operating history, investors rely on intuition – judgments about founder quality, product-market fit, and timing. Of these, timing is often the least visible but most critical.
