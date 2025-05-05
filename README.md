@@ -85,7 +85,7 @@ $ cd <folder>
 
 [3 Tier Models, CatBoost, 5 and 10 Year Label](GoogleColab/Data/Classification_Model_Metrics_2.csv)
 
-## Reinforcement Learning Model
+### Reinforcement Learning Model
 [Agent Comparison](GoogleColab/Data/RL_Model/agent_comparison_summary.csv)
 
 **Average Return Distribution**
