@@ -79,12 +79,12 @@ $ cd <folder>
 ## Results
 
 ### Classification Model
-![3 Tier Models, 4 Types of Classifiers, 5 Year Label](GoogleColab/Data/Classification_Model_Metrics_1.csv)
+[3 Tier Models, 4 Types of Classifiers, 5 Year Label](GoogleColab/Data/Classification_Model_Metrics_1.csv)
 
-![3 Tier Models, CatBoost, 5 and 10 Year Label](GoogleColab/Data/Classification_Model_Metrics_1.csv)
+[3 Tier Models, CatBoost, 5 and 10 Year Label](GoogleColab/Data/Classification_Model_Metrics_1.csv)
 
 ## Reinforcement Learning Model
-![Agent Comparison](GoogleColab/Data/RL_Model/agent_comparison_summary.csv)
+[Agent Comparison](GoogleColab/Data/RL_Model/agent_comparison_summary.csv)
 
 **Average Return Distribution**
 ![Return Comparison](GoogleColab/Data/RL_Model/return_comparison.png)
