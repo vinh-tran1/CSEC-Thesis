@@ -1,0 +1,156 @@
+--------------------
+-- Table Creation --
+--------------------
+CREATE TABLE cb_early_features AS
+
+-- STEP 1: Filter organizations
+WITH filtered_organizations AS (
+    SELECT
+        uuid AS org_uuid,
+        name AS org_name,
+        city,
+        category_list,
+        founded_on
+    FROM organizations
+    WHERE roles LIKE '%company%'
+    AND founded_on > 2004
+),
+
+-- STEP 2: Add org descriptions
+org_with_description AS (
+    SELECT o.*, od.description AS org_description
+    FROM filtered_organizations o
+    LEFT JOIN organization_descriptions od ON o.org_uuid = od.uuid
+),
+
+-- STEP 3: Join founders (executives only)
+people_joined AS (
+    SELECT
+        p.uuid AS person_uuid,
+        p.featured_job_organization_uuid AS org_uuid,
+        p.gender AS person_gender,
+        p.featured_job_title,
+        pd.description AS person_description
+    FROM people p
+    LEFT JOIN people_descriptions pd ON p.uuid = pd.uuid
+    WHERE LOWER(p.featured_job_title) LIKE '%founder%'
+       OR LOWER(p.featured_job_title) LIKE '%ceo%'
+       OR LOWER(p.featured_job_title) LIKE '%chief executive officer%'
+       OR LOWER(p.featured_job_title) LIKE '%cto%'
+       OR LOWER(p.featured_job_title) LIKE '%chief technology officer%'
+       OR LOWER(p.featured_job_title) LIKE '%coo%'
+       OR LOWER(p.featured_job_title) LIKE '%chief operating officer%'
+       OR LOWER(p.featured_job_title) LIKE '%cfo%'
+       OR LOWER(p.featured_job_title) LIKE '%chief financial officer%'
+       OR LOWER(p.featured_job_title) LIKE '%cso%'
+       OR LOWER(p.featured_job_title) LIKE '%chief strategy officer%'
+),
+
+-- STEP 4: Join education data
+degrees_joined AS (
+    SELECT
+        person_uuid,
+        institution_name,
+        degree_type,
+        subject
+    FROM degrees
+),
+
+-- STEP 5: EARLY funding round (first only, within 5 years)
+early_funding_rounds AS (
+    SELECT *
+    FROM (
+        SELECT fr.*,
+               o.founded_on,
+               ROW_NUMBER() OVER (
+                   PARTITION BY fr.org_uuid
+                   ORDER BY fr.announced_on
+               ) AS rn
+        FROM funding_rounds fr
+        JOIN filtered_organizations o ON fr.org_uuid = o.org_uuid
+        WHERE fr.investment_type IN (
+            'angel', 'convertible_note', 'pre_seed', 'seed', 'product_crowdfunding', 'grant'
+--             ,'corporate_round', 'series_a', 'series_b', 'series_c', 'series_d', 'series_e',
+--             'series_f', 'series_g', 'series_h', 'series_i', 'series_j', 'series_unknown'
+        )
+        AND julianday(fr.announced_on) - julianday(o.founded_on) <= 1825  -- 5 years
+    ) t
+--     WHERE rn = 1
+),
+
+-- STEP 6: Investors on early round
+early_investors AS (
+    SELECT
+        fr.uuid AS funding_round_uuid,
+        fr.org_uuid,
+        fr.investment_type,
+        fr.announced_on,
+        fr.raised_amount,
+        fr.raised_amount_usd,
+        fr.investor_count,
+        inv.investor_name,
+        inv.is_lead_investor,
+        iv.investor_types
+    FROM early_funding_rounds fr
+    LEFT JOIN investments inv ON fr.uuid = inv.funding_round_uuid
+    LEFT JOIN investors iv ON inv.investor_uuid = iv.uuid
+)
+
+-- FINAL TABLE
+SELECT
+    o.org_uuid,
+    o.org_name,
+    o.city,
+    o.founded_on,
+    o.category_list,
+    o.org_description,
+
+    -- Founder data
+    p.person_uuid,
+    p.person_gender,
+    p.featured_job_title,
+    p.person_description,
+    d.institution_name,
+    d.degree_type,
+    d.subject,
+
+    -- Investor/Funding (Filtered to first 5 years)
+    ei.funding_round_uuid,
+    ei.announced_on,
+    ei.investment_type,
+    ei.raised_amount,
+    ei.raised_amount_usd,
+    ei.investor_count,
+    ei.investor_name,
+    ei.investor_types,
+    ei.is_lead_investor
+
+FROM org_with_description o
+LEFT JOIN people_joined p ON o.org_uuid = p.org_uuid
+LEFT JOIN degrees_joined d ON p.person_uuid = d.person_uuid
+LEFT JOIN early_investors ei ON o.org_uuid = ei.org_uuid;
+
+CREATE TABLE cb_post_funding_rounds AS
+SELECT
+    fr.org_uuid,
+    fr.announced_on AS funding_round_date,
+    fr.investment_type,
+    fr.raised_amount,
+    fr.raised_amount_usd
+FROM funding_rounds fr
+WHERE fr.investment_type IN (
+    'angel', 'convertible_note', 'pre_seed', 'seed', 'product_crowdfunding', 'grant',
+    'series_a', 'series_b', 'series_c', 'series_d', 'series_e',
+    'series_f', 'series_g', 'series_h', 'series_i', 'series_j',
+    'series_unknown', 'corporate_round'
+);
+
+CREATE TABLE cb_outcomes AS
+SELECT
+    o.uuid AS org_uuid,
+    o.status,
+    ipo.went_public_on,
+    acq.acquired_on
+FROM organizations o
+LEFT JOIN ipos ipo ON o.uuid = ipo.org_uuid
+LEFT JOIN acquisitions acq ON o.uuid = acq.acquiree_uuid;

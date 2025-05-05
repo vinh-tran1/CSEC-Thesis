@@ -1,0 +1,17 @@
+jupyter
+notebook
+pandas
+numpy
+matplotlib
+seaborn
+requests
+yfinance
+beautifulsoup4
+ipykernel
+pytrends
+praw
+newsapi-python
+transformers
+sentence-transformers
+vaderSentiment
+textblob
